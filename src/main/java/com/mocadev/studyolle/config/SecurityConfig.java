@@ -19,11 +19,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/email-login", "/check-email-login", "/login-link").permitAll()
 			.mvcMatchers(HttpMethod.GET, "/profile/*").permitAll()
 			.anyRequest().authenticated();
-
 	}
 
 	@Override
-	public void configure(WebSecurity web) throws Exception {
+	public void configure(WebSecurity web) {
 		web.ignoring()
 			.requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
