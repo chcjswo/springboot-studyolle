@@ -1,5 +1,7 @@
 package com.mocadev.studyolle.account;
 
+import com.mocadev.studyolle.domain.Account;
+import java.time.LocalDateTime;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ public class AccountController {
 
 	private final SingUpFormValidator singUpFormValidator;
 	private final AccountService accountService;
+	private final AccountRepository accountRepository;
 
 	@InitBinder("signupForm")
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -36,5 +39,24 @@ public class AccountController {
 		accountService.processNewAccount(signUpForm);
 
 		return "redirect:/";
+	}
+
+	@GetMapping("/check-email-token")
+	public String checkEmailToken(String token, String email, Model model) {
+		final Account account = accountRepository.findByEmail(email);
+		final String view = "account/checked-email";
+		if (account == null) {
+			model.addAttribute("error", "wrong email");
+			return view;
+		}
+		if (!account.getEmailCheckToken().equals(token)) {
+			model.addAttribute("error", "wrong.token");
+			return view;
+		}
+		account.setEmailVerified(true);
+		account.setJoinedAt(LocalDateTime.now());
+		model.addAttribute("numberOfUser", accountRepository.count());
+		model.addAttribute("nickname", account.getNickname());
+		return view;
 	}
 }

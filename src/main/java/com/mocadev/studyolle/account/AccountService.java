@@ -1,11 +1,12 @@
 package com.mocadev.studyolle.account;
 
-import com.mocadev.studyolle.ConsoleMailSender;
 import com.mocadev.studyolle.domain.Account;
+import com.mocadev.studyolle.mail.ConsoleMailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author chcjswo
@@ -21,6 +22,13 @@ public class AccountService {
 	private final AccountRepository accountRepository;
 	private final ConsoleMailSender javaMailSender;
 	private final PasswordEncoder passwordEncoder;
+
+	@Transactional
+	public void processNewAccount(SignUpForm signUpForm) {
+		final Account newAccount = saveNewAccount(signUpForm);
+		newAccount.generateEmailCheckToken();
+		sendSignUpConfirmEmail(newAccount);
+	}
 
 	private Account saveNewAccount(SignUpForm signUpForm) {
 		final Account account = Account.builder()
@@ -41,11 +49,5 @@ public class AccountService {
 		mailMessage.setSubject("스터디할래, 회원 가입 인증");
 		mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
 		javaMailSender.send(mailMessage);
-	}
-
-	public void processNewAccount(SignUpForm signUpForm) {
-		final Account newAccount = saveNewAccount(signUpForm);
-		newAccount.generateEmailCheckToken();
-		sendSignUpConfirmEmail(newAccount);
 	}
 }

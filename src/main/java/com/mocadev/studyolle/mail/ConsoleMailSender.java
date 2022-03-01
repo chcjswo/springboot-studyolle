@@ -1,4 +1,4 @@
-package com.mocadev.studyolle;
+package com.mocadev.studyolle.mail;
 
 import java.io.InputStream;
 import javax.mail.internet.MimeMessage;

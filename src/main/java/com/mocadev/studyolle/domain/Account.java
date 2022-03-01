@@ -37,7 +37,7 @@ public class Account {
 
 	private String password;
 
-	private String emailVerified;
+	private boolean emailVerified;
 
 	private String emailCheckToken;
 
