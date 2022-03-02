@@ -34,39 +34,24 @@ public class Account {
 
 	@Column(unique = true)
 	private String nickname;
-
 	private String password;
-
 	private boolean emailVerified;
-
 	private String emailCheckToken;
-
 	private LocalDateTime joinedAt;
-
 	private String bio;
-
 	private String url;
-
 	private String occupation;
-
 	private String liveAround;
-
 	private String location;
 
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	private String profileImage;
-
 	private boolean studyCreatedByEmail;
-
 	private boolean studyCreatedByWeb;
-
 	private boolean studyEnrollmentResultByWeb;
-
 	private boolean studyEnrollmentResultByEmail;
-
 	private boolean studyUpdatedResultByWeb;
-
 	private boolean studyUpdatedResultByEmail;
 
 	public void generateEmailCheckToken() {
