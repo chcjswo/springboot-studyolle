@@ -2,6 +2,7 @@ package com.mocadev.studyolle.account;
 
 import com.mocadev.studyolle.domain.Account;
 import com.mocadev.studyolle.mail.ConsoleMailSender;
+import com.mocadev.studyolle.settings.Profile;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -86,5 +87,13 @@ public class AccountService implements UserDetailsService {
 	public void completeSignUp(Account account) {
 		account.completeSignUp();
 		login(account);
+	}
+
+	public void updateProfile(Account account, Profile profile) {
+		account.setUrl(profile.getUrl());
+		account.setBio(profile.getBio());
+		account.setOccupation(profile.getOccupation());
+		account.setLocation(profile.getLocation());
+		accountRepository.save(account);
 	}
 }

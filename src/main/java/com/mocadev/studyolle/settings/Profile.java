@@ -2,6 +2,7 @@ package com.mocadev.studyolle.settings;
 
 import com.mocadev.studyolle.domain.Account;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author chcjswo
@@ -11,6 +12,7 @@ import lombok.Data;
  * @since 2022-03-06
  **/
 @Data
+@NoArgsConstructor
 public class Profile {
 
 	private String bio;
