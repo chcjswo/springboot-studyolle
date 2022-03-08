@@ -5,6 +5,7 @@ import com.mocadev.studyolle.mail.ConsoleMailSender;
 import com.mocadev.studyolle.settings.Profile;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class AccountService implements UserDetailsService {
 
 	private final AccountRepository accountRepository;
@@ -94,6 +96,7 @@ public class AccountService implements UserDetailsService {
 		account.setBio(profile.getBio());
 		account.setOccupation(profile.getOccupation());
 		account.setLocation(profile.getLocation());
+		account.setProfileImage(profile.getProfileImage());
 		accountRepository.save(account);
 	}
 }
