@@ -2,6 +2,7 @@ package com.mocadev.studyolle.settings;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
@@ -41,6 +43,9 @@ class SettingsControllerTest {
 
 	@Autowired
 	AccountRepository accountRepository;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@AfterEach
 	void afterEach() {
@@ -79,5 +84,21 @@ class SettingsControllerTest {
 
 		final Account account = accountRepository.findByNickname("test");
 		assertNull(account.getBio());
+	}
+
+	@Test
+	@DisplayName("패스워드 수정 - 정상")
+	@WithAccount("test")
+	void updatePasswordTest() throws Exception {
+		mockMvc.perform(post(SettingsController.SETTINGS_PASSWORD_URL)
+				.param("newPassword", "11111111")
+				.param("newPasswordConfirm", "11111111")
+				.with(csrf()))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(redirectedUrl(SettingsController.SETTINGS_PASSWORD_URL))
+			.andExpect(flash().attributeExists("message"));
+
+		final Account account = accountRepository.findByNickname("test");
+		assertTrue(passwordEncoder.matches("11111111", account.getPassword()));
 	}
 }
