@@ -50,11 +50,13 @@ public class Account {
 	@Basic(fetch = FetchType.EAGER)
 	private String profileImage;
 	private boolean studyCreatedByEmail;
-	private boolean studyCreatedByWeb;
-	private boolean studyEnrollmentResultByWeb;
+	private boolean studyCreatedByWeb = true;
 	private boolean studyEnrollmentResultByEmail;
-	private boolean studyUpdatedResultByWeb;
+	private boolean studyEnrollmentResultByWeb = true;
 	private boolean studyUpdatedResultByEmail;
+	private boolean studyUpdatedResultByWeb = true;
+	private boolean studyUpdatedByEmail;
+	private boolean studyUpdatedByWeb = true;
 	private LocalDateTime emailCheckTokenGeneratedAt;
 
 	public void generateEmailCheckToken() {
