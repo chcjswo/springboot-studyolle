@@ -1,8 +1,6 @@
 package com.mocadev.studyolle.settings;
 
-import com.mocadev.studyolle.domain.Account;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author chcjswo
@@ -12,7 +10,6 @@ import lombok.NoArgsConstructor;
  * @since 2022-03-09
  **/
 @Data
-@NoArgsConstructor
 public class Notifications {
 
 	private boolean studyCreatedByEmail;
@@ -21,13 +18,4 @@ public class Notifications {
 	private boolean studyEnrollmentResultByWeb;
 	private boolean studyUpdatedByEmail;
 	private boolean studyUpdatedByWeb;
-
-	public Notifications(Account account) {
-		this.studyCreatedByEmail = account.isStudyCreatedByEmail();
-		this.studyCreatedByWeb = account.isStudyCreatedByWeb();
-		this.studyEnrollmentResultByEmail = account.isStudyEnrollmentResultByEmail();
-		this.studyEnrollmentResultByWeb = account.isStudyEnrollmentResultByWeb();
-		this.studyUpdatedByEmail = account.isStudyUpdatedByEmail();
-		this.studyUpdatedByWeb = account.isStudyUpdatedByWeb();
-	}
 }
