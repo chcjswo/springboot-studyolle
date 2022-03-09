@@ -1,4 +1,4 @@
-package com.mocadev.studyolle.settings;
+package com.mocadev.studyolle.settings.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

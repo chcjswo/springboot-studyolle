@@ -2,8 +2,8 @@ package com.mocadev.studyolle.account;
 
 import com.mocadev.studyolle.domain.Account;
 import com.mocadev.studyolle.mail.ConsoleMailSender;
-import com.mocadev.studyolle.settings.Notifications;
-import com.mocadev.studyolle.settings.Profile;
+import com.mocadev.studyolle.settings.form.Notifications;
+import com.mocadev.studyolle.settings.form.Profile;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -107,5 +107,11 @@ public class AccountService implements UserDetailsService {
 	public void updateNotifications(Account account, Notifications notifications) {
 		modelMapper.map(notifications, account);
 		accountRepository.save(account);
+	}
+
+	public void updateNickname(Account account, String nickname) {
+		account.setNickname(nickname);
+		accountRepository.save(account);
+		login(account);
 	}
 }

@@ -1,5 +1,6 @@
-package com.mocadev.studyolle.settings;
+package com.mocadev.studyolle.settings.validator;
 
+import com.mocadev.studyolle.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
